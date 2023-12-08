@@ -22,7 +22,11 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
+	implementation("com.querydsl:querydsl-jpa")
+	implementation("com.querydsl:querydsl-apt:5.0.0:jpa")
+	implementation("jakarta.persistence:jakarta.persistence-api:3.0.0")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
