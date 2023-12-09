@@ -1,12 +1,14 @@
 package com.group.libraryapp.domain.book
 
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
+import jakarta.persistence.*
 
 
 class Book(
   val name: String,
+
+  @Enumerated(EnumType.STRING)
+  val type: BookType,
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   val id: Long? = null
@@ -26,6 +28,7 @@ class Book(
     ): Book {
       return Book(
         name = name,
+        type = type,
         id = id,
       )
     }
