@@ -5,6 +5,9 @@ plugins {
 	id("io.spring.dependency-management") version "1.1.4"
 	kotlin("jvm") version "1.9.20"
 	kotlin("plugin.spring") version "1.9.20"
+	kotlin("plugin.jpa") version "1.9.20"
+	kotlin("plugin.allopen") version "1.9.20"
+	kotlin("kapt") version "1.9.20"
 }
 
 group = "com.example"
@@ -12,6 +15,21 @@ version = "0.0.1-SNAPSHOT"
 
 java {
 	sourceCompatibility = JavaVersion.VERSION_17
+}
+
+configurations {
+	compileOnly {
+		extendsFrom(configurations.annotationProcessor.get())
+	}
+}
+
+val querydslVersion = "5.0.0"
+
+allOpen {
+	// Spring Boot 3.0.0
+	annotation("jakarta.persistence.Entity")
+	annotation("jakarta.persistence.MappedSuperclass")
+	annotation("jakarta.persistence.Embeddable")
 }
 
 repositories {
@@ -24,10 +42,21 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
-	implementation("com.querydsl:querydsl-jpa")
-	implementation("com.querydsl:querydsl-apt:5.0.0:jpa")
-	implementation("jakarta.persistence:jakarta.persistence-api:3.0.0")
+	implementation("com.querydsl:querydsl-jpa:$querydslVersion:jakarta")
+	kapt("com.querydsl:querydsl-apt:${querydslVersion}:jakarta")
+	implementation("org.junit.jupiter:junit-jupiter")
+	implementation("org.springframework.boot:spring-boot-configuration-processor")
+
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+}
+
+kapt {
+	javacOptions {
+		option("querydsl.entityAccessors", true)
+	}
+	arguments {
+		arg("plugin", "com.querydsl.apt.jpa.JPAAnnotationProcessor")
+	}
 }
 
 tasks.withType<KotlinCompile> {
@@ -40,3 +69,9 @@ tasks.withType<KotlinCompile> {
 tasks.withType<Test> {
 	useJUnitPlatform()
 }
+
+tasks.jar {
+	enabled = false
+}
+
+
