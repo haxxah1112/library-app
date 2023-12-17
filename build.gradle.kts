@@ -3,11 +3,10 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
 	id("org.springframework.boot") version "3.2.0"
 	id("io.spring.dependency-management") version "1.1.4"
-	kotlin("jvm") version "1.9.20"
-	kotlin("plugin.spring") version "1.9.20"
-	kotlin("plugin.jpa") version "1.9.20"
-	kotlin("plugin.allopen") version "1.9.20"
-	kotlin("kapt") version "1.9.20"
+	kotlin("jvm") version "1.8.0"
+	kotlin("plugin.spring") version "1.8.0"
+	kotlin("plugin.jpa") version "1.8.0"
+	kotlin("kapt") version "1.8.0"
 }
 
 group = "com.example"
@@ -44,8 +43,11 @@ dependencies {
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	implementation("com.querydsl:querydsl-jpa:$querydslVersion:jakarta")
 	kapt("com.querydsl:querydsl-apt:${querydslVersion}:jakarta")
+	kapt("jakarta.annotation:jakarta.annotation-api")
+	kapt("jakarta.persistence:jakarta.persistence-api")
 	implementation("org.junit.jupiter:junit-jupiter")
 	implementation("org.springframework.boot:spring-boot-configuration-processor")
+	runtimeOnly("com.h2database:h2")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
