@@ -2,7 +2,7 @@ package com.group.libraryapp.domain.book
 
 import jakarta.persistence.*
 
-
+@Entity
 class Book(
   val name: String,
 
