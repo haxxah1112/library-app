@@ -4,6 +4,7 @@ import com.group.libraryapp.domain.book.Book
 import com.group.libraryapp.domain.user.loanhistory.UserLoanHistory
 import jakarta.persistence.*
 
+@Table(name="user")
 @Entity
 class User constructor(
   var name: String,
