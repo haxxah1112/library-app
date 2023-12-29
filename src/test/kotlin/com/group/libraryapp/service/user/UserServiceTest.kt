@@ -60,4 +60,32 @@ class UserServiceTest @Autowired constructor(
     assertThat(results).extracting("age").containsExactlyInAnyOrder(20, null)
   }
 
+  @Test
+  @DisplayName("유저 업데이트가 정상 동작한다")
+  fun updateUserNameTest() {
+    // given
+    val savedUser = userRepository.save(User("A", null))
+    val request = UserUpdateRequest(savedUser.id!!, "B")
+
+    // when
+    userService.updateUserName(request)
+
+    // then
+    val result = userRepository.findAll()[0]
+    assertThat(result.name).isEqualTo("B")
+  }
+
+  @Test
+  @DisplayName("유저 삭제가 정상 동작한다")
+  fun deleteUserTest() {
+    // given
+    userRepository.save(User("A", null))
+
+    // when
+    userService.deleteUser("A")
+
+    // then
+    assertThat(userRepository.findAll()).isEmpty()
+  }
+  
 }
