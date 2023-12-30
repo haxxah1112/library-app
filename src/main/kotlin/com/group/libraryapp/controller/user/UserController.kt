@@ -32,4 +32,15 @@ class UserController(
   fun updateUserName(@RequestBody request: UserUpdateRequest) {
     userService.updateUserName(request)
   }
+
+  @DeleteMapping("/user")
+  fun deleteUser(@RequestParam name: String) {
+    userService.deleteUser(name)
+  }
+
+  @GetMapping("/user/loan")
+  fun getUserLoanHistories(): List<UserLoanHistoryResponse> {
+    return userService.getUserLoanHistories()
+  }
+
 }
