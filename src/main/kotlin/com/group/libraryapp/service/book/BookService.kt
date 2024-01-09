@@ -4,6 +4,7 @@ import com.group.libraryapp.domain.book.Book
 import com.group.libraryapp.domain.book.BookRepository
 import com.group.libraryapp.domain.user.UserRepository
 import com.group.libraryapp.domain.user.loanhistory.UserLoanHistoryRepository
+import com.group.libraryapp.domain.user.loanhistory.UserLoanStatus
 import com.group.libraryapp.dto.book.request.BookLoanRequest
 import com.group.libraryapp.dto.book.request.BookRequest
 import com.group.libraryapp.dto.book.request.BookReturnRequest
@@ -38,5 +39,10 @@ class BookService(
   fun returnBook(request: BookReturnRequest) {
     val user = userRepository.findByName(request.userName) ?: throw IllegalArgumentException("not found book")
     user.returnBook(request.bookName)
+  }
+
+  @Transactional(readOnly = true)
+  fun countLoanBook(): Int {
+    return userLoanHistoryRepository.findAllByStatus(UserLoanStatus.LOANED).size
   }
 }
