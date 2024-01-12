@@ -54,6 +54,8 @@ class BookService(
       val targetDto = results.firstOrNull { dto -> book.type == dto.type }
       if (targetDto == null) {
         results.add(BookStatResponse(book.type, 1))
+      } else {
+        targetDto.plusOne()
       }
     }
     return results
