@@ -5,38 +5,35 @@ import com.group.libraryapp.dto.book.request.BookRequest
 import com.group.libraryapp.dto.book.request.BookReturnRequest
 import com.group.libraryapp.dto.book.response.BookStatResponse
 import com.group.libraryapp.service.book.BookService
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.PutMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
+@RequestMapping("/book")
 class BookController(
   private val bookService: BookService,
 ) {
 
-  @PostMapping("/book")
+  @PostMapping
   fun saveBook(@RequestBody request: BookRequest) {
     bookService.saveBook(request)
   }
 
-  @PostMapping("/book/loan")
+  @PostMapping("/loan")
   fun loanBook(@RequestBody request: BookLoanRequest) {
     bookService.loanBook(request)
   }
 
-  @PutMapping("/book/return")
+  @PutMapping("/return")
   fun returnBook(@RequestBody request: BookReturnRequest) {
     bookService.returnBook(request)
   }
 
-  @GetMapping("/book/loan")
+  @GetMapping("/loan")
   fun countLoanedBook(): Int {
     return bookService.countLoanBook()
   }
 
-  @GetMapping("book/stat")
+  @GetMapping("/stat")
   fun getBookStatistics(): List<BookStatResponse> {
     return bookService.getBookStatistics()
   }
